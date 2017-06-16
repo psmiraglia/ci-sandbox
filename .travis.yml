@@ -8,5 +8,11 @@ before_install:
     - sudo sh /tmp/bootstrap-salt.sh stable
 
 install:
-    - sudo service salt-minion restart
-    - sudo salt-call --local grains.items
+    - mkdir -p /srv/salt/states
+    - cp -r ./formula /srv/salt/states/formula
+    - cp .travis/top.sls /srv/salt/states/top.sls
+    - cp .travis/minion /etc/salt/minion
+
+script:
+    - sudo salt-call --local state.show_highstate
+    
