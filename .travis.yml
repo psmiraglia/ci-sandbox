@@ -1,19 +1,12 @@
-sudo: required
-
 language: python
 
 python:
-    - "2.6"
     - "2.7"
-    - "3.2"
-    - "3.3"
-
-services:
-    - docker
 
 before_install:
-    - docker build -t psmiraglia/ci-sandbox .
-    - docker run psmiraglia/ci-sandbox
-    - docker ps -a
+    - curl -L https://bootstrap.saltstack.com -o /tmp/bootstrap-salt.sh
+    - sudo sh /tmp/bootstrap-salt.sh stable
 
-script: python --version
+install:
+    - sudo service salt-minion restart
+    - sudo salt-call --local grains.items
