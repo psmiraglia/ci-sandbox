@@ -8,7 +8,7 @@ provisioner:
     name: salt_solo
     formula: formula
     salt_install: bootstrap
-    salt_bootstrap_options: stable
+    salt_bootstrap_options: -X stable
     require_chef: false
     state_top:
         base:
