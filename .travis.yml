@@ -1,25 +1,33 @@
-language: python
+#language: python
+#
+#python:
+#    - "2.7"
+#env:
+#    global:
+#        - SALT_OPTS="--local --retcode-passthrough"
+#    matrix:
+#        - SALT_STATE=formula.alpha
+#        - SALT_STATE=formula.beta
+#
+#before_install:
+#    - curl -L https://bootstrap.saltstack.com -o /tmp/bootstrap-salt.sh
+#    - sudo sh /tmp/bootstrap-salt.sh stable
+#
+#install:
+#    - sudo mkdir -p /srv/salt/states
+#    - sudo cp -r ./formula /srv/salt/states/formula
+#    - sudo cp .travis/top.sls /srv/salt/states/top.sls
+#    - sudo cp .travis/minion /etc/salt/minion
+#
+#script:
+#    - sudo salt-call state.show_highstate $SALT_OPTS
+#    - sudo salt-call state.show_sls $SALT_STATE $SALT_OPTS
+#    - sudo salt-call state.apply $SALT_STATE $SALT_OPTS
+sudo: required
 
-python:
-    - "2.7"
-env:
-    global:
-        - SALT_OPTS="--local --retcode-passthrough"
-    matrix:
-        - SALT_STATE=formula.alpha
-        - SALT_STATE=formula.beta
+language: ruby
 
-before_install:
-    - curl -L https://bootstrap.saltstack.com -o /tmp/bootstrap-salt.sh
-    - sudo sh /tmp/bootstrap-salt.sh stable
+services:
+    - docker
 
-install:
-    - sudo mkdir -p /srv/salt/states
-    - sudo cp -r ./formula /srv/salt/states/formula
-    - sudo cp .travis/top.sls /srv/salt/states/top.sls
-    - sudo cp .travis/minion /etc/salt/minion
-
-script:
-    - sudo salt-call state.show_highstate $SALT_OPTS
-    - sudo salt-call state.show_sls $SALT_STATE $SALT_OPTS
-    - sudo salt-call state.apply $SALT_STATE $SALT_OPTS
+script: bundle exec kitchen verify

@@ -1,0 +1,29 @@
+---
+driver:
+    name: docker
+    use_sudo: false
+    privileged: true
+
+provisioner:
+    name: salt_solo
+    formula: formula
+    salt_install: bootstrap
+    salt_bootstrap_options: stable
+    require_chef: false
+    state_top:
+        base:
+            "*":
+                - formula.alpha
+                - formula.beta
+
+platforms:
+    - name: debian-stable
+    - name: debian-testing
+    - name: ubuntu-14.04
+    - name: ubuntu-16.04
+    - name: ubuntu-17.04
+    - name: centos-6
+    - name: centos-7
+
+suites:
+    - name: default
